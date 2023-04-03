@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:mariadb://hellojhworld-db.c7xo15ztjyyx.ap-northeast-2.rds.amazonaws.com:3306/db_hellojhworld
+    url: jdbc:mariadb://hellojhworld-database.c7xo15ztjyyx.ap-northeast-2.rds.amazonaws.com:3306/db_hellojhworld
     driver-class-name: org.mariadb.jdbc.Driver
     username: admin
     password: jae156212!
