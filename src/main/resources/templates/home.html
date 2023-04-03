@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="utf-8">
+	<title>Hello JunHeoyk World!</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
+	<!-- THEME CSS
+	================================================== -->
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+	<!-- Themify -->
+	<link rel="stylesheet" href="plugins/themify/css/themify-icons.css">
+	<link rel="stylesheet" href="plugins/slick-carousel/slick-theme.css">
+	<link rel="stylesheet" href="plugins/slick-carousel/slick.css">
+	<!-- Slick Carousel -->
+	<link rel="stylesheet" href="plugins/owl-carousel/owl.carousel.min.css">
+	<link rel="stylesheet" href="plugins/owl-carousel/owl.theme.default.min.css">
+	<link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css">
+	<!-- manin stylesheet -->
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+	<section class="section-padding pt-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+					<article class="post-grid mb-5">
+						<a class="post-thumb mb-4 d-block" >
+							<img src="images/fashion/bg-fashion.jpg" alt="" class="img-fluid w-100">
+						</a>
+						<span class="font-sm text-color letter-spacing text-uppercase post-meta font-extra">Today's Cody</span>
+						<h2 class="mb-1 mt-2 post-title"><a>What to wear today</a></h2>
+
+						<div class="post-content mt-4">
+							<p>Let me guide you on what to wear today! Click the button below.</p>
+						</div>
+					</article>
+					<button type="button" onclick="fnChatGPT()" class="btn btn-success" style="margin-right:16px;height:48px;color:white;">
+						Chat GPT
+					</button>
+
+					<div class="form-group">
+						<textarea id="chatGPTanswer" name="chatGPTanswer" rows="17" class="col-lg-12 col-md-6" style="outline: none; height: auto;" placeholder="요청 후 몇 초의 대기시간이 발생합니다. 잠시만 기다려주세요." readonly></textarea>
+					</div>
+
+
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+					<div class="sidebar sidebar-right">
+						<div class="sidebar-wrap mt-5 mt-lg-0">
+							<div class="sidebar-widget about mb-5 text-center p-3">
+								<div class="about-author">
+									<img src="images/myProfile.jpg" alt="" class="img-fluid" style="width:250px;height:250px">
+								</div>
+								<h4 class="mb-0 mt-4">Jun Heoyk</h4>
+								<p>Backend Developer</p>
+								<p>Hi, I'm Junhyeok. Welcome to my world. Nice to meet you</p>
+							</div>
+
+							<div class="sidebar-widget mb-5 ">
+								<h4 class="text-center widget-title">Best 3 Posts</h4>
+
+								<div class="sidebar-post-item-big">
+									<a href="#" th:onclick="fnPostPage(/*[[${blogPosts[0].id}]]*/)"><img src="images/news/img-1.jpg" alt="" class="img-fluid"></a>
+									<div class="mt-3 media-body">
+										<span class="text-muted letter-spacing text-uppercase font-sm" th:text="${blogPosts[0].category}"></span>
+										<h4><a href="#" th:onclick="fnPostPage(/*[[${blogPosts[0].id}]]*/)" th:text="${blogPosts[0].title}"></a></h4>
+									</div>
+								</div>
+
+								<div class="media border-bottom py-3 sidebar-post-item">
+									<a href="#" th:onclick="fnPostPage(/*[[${blogPosts[1].id}]]*/)"><img class="mr-4" src="images/news/thumb-1.jpg" alt=""></a>
+									<div class="media-body">
+										<span class="text-muted letter-spacing text-uppercase font-sm" th:text="${blogPosts[1].category}"></span>
+										<h4><a href="#" th:onclick="fnPostPage(/*[[${blogPosts[1].id}]]*/)" th:text="${blogPosts[1].title}"></a></h4>
+									</div>
+								</div>
+
+								<div class="media py-3 sidebar-post-item">
+									<a href="#" th:onclick="fnPostPage(/*[[${blogPosts[2].id}]]*/)"><img class="mr-4" src="images/news/thumb-2.jpg" alt=""></a>
+									<div class="media-body">
+										<span class="text-muted letter-spacing text-uppercase font-sm" th:text="${blogPosts[2].category}"></span>
+										<h4><a href="#" th:onclick="fnPostPage(/*[[${blogPosts[2].id}]]*/)" th:text="${blogPosts[2].title}"></a></h4>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<input type="hidden" id="maxGptCnt" name="maxGptCnt" value="0">
+
+	<!-- THEME JAVASCRIPT FILES
+================================================== -->
+	<!-- initialize jQuery Library -->
+	<script src="plugins/jquery/jquery.js"></script>
+	<!-- Bootstrap jQuery -->
+	<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="plugins/bootstrap/js/popper.min.js"></script>
+	<!-- Owl caeousel -->
+	<script src="plugins/owl-carousel/owl.carousel.min.js"></script>
+	<script src="plugins/slick-carousel/slick.min.js"></script>
+	<script src="plugins/magnific-popup/magnific-popup.js"></script>
+	<!-- Instagram Feed Js -->
+	<script src="plugins/instafeed-js/instafeed.min.js"></script>
+	<!-- Google Map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+	<script src="plugins/google-map/gmap.js"></script>
+	<!-- main js -->
+	<script src="js/custom.js"></script>
+
+	<script type="text/javascript">
+
+		window.onload = function() {
+		  	// 페이지 로드 후 실행할 코드
+
+		};
+
+		// 챗 GPT API 함수
+		async function fnChatGPT() {
+
+		  var maxGptCnt = document.getElementById('maxGptCnt').value;
+		  $('input[name=maxGptCnt]').attr('value',parseInt(maxGptCnt)+1);
+
+		  if(document.getElementById('maxGptCnt').value > 5){
+			alert("많이 누르면 돈 나가요 ㅎㅎ..");
+			return;
+		  }
+
+		  const urlW = 'https://api.openweathermap.org/data/2.5/weather?lat=37.57&lon=126.98&appid=1053cb647a61352213d0622bbac56a6d';
+		  var dataW = '';
+		  try {
+			const responseW = await fetch(urlW);
+
+			dataW = await responseW.json(); // 응답 데이터를 JSON으로 변환
+
+		  } catch (error) {
+			console.error(error);
+			$('#chatGPTanswer').val("Error 발생하였습니다. 잠시 후에 시도해 주세요.");
+			return;
+		  }
+
+		  var prompt = JSON.stringify(dataW) + " 위의 날씨 정보를 보고 temp를 섭씨로 변환해서 말해주고 옷을 상세하게 추천해줘" // 자연어 생성에 사용할 prompt
+
+		  const apiKey = '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'; // API 키
+		  const url = 'https://api.openai.com/v1/chat/completions';     // gpt-3.5-turbo 모델용 url
+
+		  try {
+			const response = await fetch(url, {
+			  method: 'POST',
+			  headers: {
+				'Authorization': 'Bearer ' + apiKey,
+				'Content-Type': 'application/json'
+			  },
+			  body: JSON.stringify({
+				"model": "gpt-3.5-turbo",
+				"messages": [{"role": "user", "content": prompt}],
+				max_tokens: 1000,
+			  })
+			});
+
+			const data = await response.json(); // 응답 데이터를 JSON으로 변환
+			const answer = data.choices[0].message.content; // gpt-3.5-turbo 모델이 생성한 답변
+			$('#chatGPTanswer').val(answer);
+		  } catch (error) {
+			console.error(error);
+			$('#chatGPTanswer').val("Error 발생하였습니다. 잠시 후에 시도해 주세요.");
+		  }
+		}
+
+		// post 페이지 이동
+		function fnPostPage(postId) {
+
+			// window.location.href를 사용하여 URL을 전달할 때, 문자열 안에서 ${postId}와 같은 템플릿 리터럴을 사용하려면 백틱(`)을 사용해야 합니다.
+			window.location.href = `/postPage?postId=${postId}`;
+
+		}
+
+
+	</script>
+
+
+</body>
+
+</html>

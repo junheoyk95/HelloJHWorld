@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello JunHeoyk World!</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    
+    <!-- THEME CSS
+	================================================== -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Themify -->
+    <link rel="stylesheet" href="plugins/themify/css/themify-icons.css">
+    <link rel="stylesheet" href="plugins/slick-carousel/slick-theme.css">
+    <link rel="stylesheet" href="plugins/slick-carousel/slick.css">
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" href="plugins/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="plugins/owl-carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css">
+    <!-- manin stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+
+<section class="single-block-wrapper section-padding">
+	<div class="container">
+		<div class="row">
+
+          <div class="col-lg-2 col-md-6 col-sm-12 col-xs-12" style="margin-right:36px;margin-top:10px">
+<!--                <div class="sidebar sidebar-left">-->
+<!--                    <div class="sidebar-widget category mb-5">-->
+<!--                        <h4 class="text-center widget-title">Catgeories</h4>-->
+<!--                        <ul th:each="category : ${categories}" class="list-unstyled">-->
+<!--                            <li class="align-items-center d-flex justify-content-between">-->
+<!--                                <a href="#" th:onclick="fnCategory()" th:text="${category.category}"></a>-->
+<!--                                <span th:text="${category.postCnt}"></span>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+           </div>
+	
+
+			<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+				<div class="single-post">
+    <div class="post-header mb-5 text-center">
+        <div class="meta-cat">
+            <a class="post-category font-extra text-color text-uppercase font-sm letter-spacing-1" href="#" th:text="${category}"></a>
+        </div>
+        <h2 class="post-title mt-2"  th:text="${title}">
+        </h2>
+
+        <div class="post-meta">
+            <span class="text-uppercase font-sm letter-spacing-1 mr-3" th:text="${registNickname}"></span>
+            <span class="text-uppercase font-sm letter-spacing-1" th:text="${registDt}"></span>
+        </div>
+        <div class="post-featured-image mt-5">
+            <img src="images/fashion/bg-banner.jpg" class="img-fluid w-100" alt="featured-image">
+        </div>
+    </div>
+    <div class="post-body">
+        <div class="entry-content" style="margin-bottom:50px">
+            <div class="form-group">
+            <textarea th:text="${content}" rows="15" class="col-lg-12 col-md-6" style="border: none;outline: none; height: auto;"></textarea>
+            </div>
+        </div>
+        <h2 class="mt-4 mb-3">모르는 부분은 ChatGPT에게 질문해보세요.</h2>
+        <div class="row">
+            <input type="text" class="form-control" id="memo" name="memo" value="" placeholder="요청 후 몇 초의 대기시간이 발생합니다."  style="width:70%;margin-top: 5px;margin-right:16px;margin-left:16px">
+
+            <button type="button" onclick="fnChatGPT()" class="btn btn-success text-capitalize" style="display: inline-block;margin-right:16px;height:48px;color:white;">
+                ChatGPT
+            </button>
+        </div>
+        <input type="hidden" id="maxGptCnt" name="maxGptCnt" value="0">
+        <div class="form-group">
+            <textarea id="chatGPTanswer" name="chatGPTanswer" rows="10" class="col-lg-12 col-md-6" style="border: none;outline: none; height: auto;" readonly></textarea>
+        </div>
+        
+
+        <div class="tags-share-box center-box d-flex text-center justify-content-between border-top border-bottom py-3">
+
+            <span class="single-comment-o"> <i class="fa fa-comment-o" ></i></span>
+
+            <div class="post-share">
+                <a class="penci-post-like single-like-button"><i id="love" class="ti-heart"></i>
+                <img id="fullLove" src="\images/love.png" style="width:16px;height:16px;display:none;margin-bottom:4px"></a>
+                <span class="single-comment-o"><i class="fa fa-comment-o" id="likeCnt" th:text="${likeCnt}"></i></span>
+            </div>
+
+            <div class="list-posts-share">
+            </div>
+
+        </div>
+    </div>
+</div>
+				
+
+		<div class="comment-area my-5">
+            <h3 class="mb-4 text-center" th:text="Comments"></h3>
+            <!-- 댓글 목록을 보여줄 영역 -->
+            <div id="comments" style="overflow:auto; height:600px;">
+
+            </div>
+
+        </div>
+
+	<form class="comment-form mb-5 gray-bg p-5" id="comment-form">
+        <input id="replyId" th:value="${replyId}" style="width:300px;border:none;margin-bottom:14px;" readonly>
+        <img  id="replyCancel" class="img-fluid" src="images/cancel.png" alt="" onclick="fnReplyCancel()" style="width:16px;height:16px;margin-left:4px" />
+		<h3 class="mb-4 text-center">Leave  a comment</h3>
+		<div class="row">
+			<div class="col-lg-12">
+				<textarea class="form-control mb-3" name="comment" id="comment" cols="30" rows="5" placeholder="Comment"></textarea>
+			</div>
+		</div>
+
+        <button class="btn btn-primary" type="button" onclick="fnAddComment()">Add Comment</button>
+	</form>
+
+			</div>
+		</div>
+	</div>
+
+    <div class="comment-area my-5">
+        <h5 class="mb-4 text-center">
+            <a href="blog" onclick="scrollToTop()" style="border-radius: 10px; border: 1px solid #007bff; display: inline-block; padding: 5px 10px; text-decoration: none;">목록으로</a>
+        </h5>
+    </div>
+</section>
+
+
+<input type="hidden" id="nickname"  th:value="${nickname}">
+<input type="hidden" id="isLoginYN" th:value="${isLoginYN}">
+<input type="hidden" id="userId"  th:value="${userId}">
+<input type="hidden" id="commentType"  th:value="${commentType}">
+<input type="hidden" id="parentId"  th:value="${parentId}">
+<input type="hidden" id="postId"  th:value="${postId}">
+
+<!-- THEME JAVASCRIPT FILES
+================================================== -->
+<!-- initialize jQuery Library -->
+<script src="plugins/jquery/jquery.js"></script>
+<!-- Bootstrap jQuery -->
+<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/bootstrap/js/popper.min.js"></script>
+<!-- Owl caeousel -->
+<script src="plugins/owl-carousel/owl.carousel.min.js"></script>
+<script src="plugins/slick-carousel/slick.min.js"></script>
+<script src="plugins/magnific-popup/magnific-popup.js"></script>
+<!-- Instagram Feed Js -->
+<script src="plugins/instafeed-js/instafeed.min.js"></script>
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+<script src="plugins/google-map/gmap.js"></script>
+<!-- main js -->
+<script src="js/custom.js"></script>
+
+<script>
+
+    window.onload = function() {
+		  	// 페이지 로드 후 실행할 코드
+
+			document.getElementById("commentType").value = "1";
+
+			renderComments();
+
+			findLikeByUserId();
+
+		};
+
+    $(document).ready(function() {
+        var userId = document.getElementById("userId").value;
+	    var postId = document.getElementById("postId").value;
+
+        // 좋아요 +1
+      $("#love").click(function() {
+        if(userId == ""){
+            alert("로그인 후에 가능합니다.");
+            return;
+        }
+        $(this).hide();
+        $("#fullLove").show();
+
+        let params = {
+            postId: postId,
+            userId: userId
+          }
+
+        ajaxPost("/postPage/addLike", params, function(resData) {
+
+            var likeCntTag = $('#likeCnt');
+            likeCntTag.text(resData);
+
+         });
+      });
+
+        // 좋아요 취소
+      $("#fullLove").click(function() {
+        if(userId == ""){
+            alert("로그인 후에 가능합니다.");
+            return;
+        }
+        $(this).hide();
+        $("#love").show();
+
+        let params = {
+            postId: postId,
+            userId: userId
+          }
+
+        ajaxPost("/postPage/cancelLike", params, function(resData) {
+
+            var likeCntTag = $('#likeCnt');
+            likeCntTag.text(resData);
+
+         });
+      });
+    });
+
+    function findLikeByUserId() {
+        var userId = document.getElementById("userId").value;
+	    var postId = document.getElementById("postId").value;
+
+	    if( userId == '' || userId == null || postId == '' || postId == null){
+	        return;
+	    }
+
+        let params = {
+            postId: postId,
+            userId: userId
+          }
+
+        ajaxPost("/postPage/findLikeByUserId", params, function(resData) {
+            if(resData != 0){
+                $("#love").hide();
+                $("#fullLove").show();
+            }
+         });
+    }
+
+	// 댓글 등록
+	function fnAddComment() {
+	    var userId = document.getElementById("userId").value;
+	    var nickname = document.getElementById("nickname").value;
+	    var postId = document.getElementById("postId").value;
+        var comment = document.getElementById("comment").value;
+        var commentType = document.getElementById("commentType").value;
+        var parentId = document.getElementById("parentId").value;
+
+        if(userId == ""){
+            alert("로그인 후에 댓글을 남길 수 있습니다.");
+            return;
+        }
+
+	    let params = {
+            registUserId: userId,
+            registNickname: nickname,
+            postId: postId,
+            content: comment,
+            commentType: commentType,
+            parentId: parentId
+          }
+
+        ajaxPost("/postPage/addComment", params, function(resData) {
+
+            document.getElementById("comment").value = "";
+            document.getElementById('comments').innerHTML = '';
+            renderComments();
+
+         });
+
+	}
+
+	 // 댓글 목록을 보여주는 함수
+     function renderComments() {
+        var postId = document.getElementById("postId").value;
+
+        let params = {
+            postId: postId
+          }
+
+        ajaxPost("/postPage/postCommentList", params, function(resData) {
+
+            // 댓글을 표시할 영역
+            const commentArea = document.getElementById("comments");
+
+            // 댓글창 높이 조절
+            if(resData.length <= 3) {
+                commentArea.style.height = "400px";
+            }
+
+            // 댓글 목록을 생성
+            for (let i = 0; i < resData.length; i++) {
+                const comment = resData[i];
+                const commentElement = createComment(comment);
+                commentArea.appendChild(commentElement);
+            }
+
+         });
+
+     }
+
+    // 댓글을 동적으로 생성하는 함수
+    function createComment(comment) {
+        // 댓글 영역을 생성
+        const commentElement = document.createElement("div");
+        commentElement.classList.add("comment-area-box", "media");
+        commentElement.style.marginBottom = "30px"
+        // 대댓글 UI
+        if(comment.parentId != null && comment.parentId != ""){
+            commentElement.style.marginLeft = "110px"
+        }
+
+        // 프로필 이미지를 생성
+        const profileImg = document.createElement("img");
+        profileImg.src = "images/user.png";
+        profileImg.alt = "";
+        profileImg.classList.add("img-fluid", "float-left", "mr-3", "mt-2");
+        profileImg.style.width = "80px";
+        profileImg.style.height = "80px";
+        commentElement.appendChild(profileImg);
+
+
+        // 댓글 내용을 생성
+        const contentElement = document.createElement("div");
+        contentElement.classList.add("media-body", "ml-4");
+
+        const nameElement = document.createElement("h4");
+        nameElement.classList.add("mt-1");
+        nameElement.style.fontWeight = "bold";
+        nameElement.textContent = comment.registNickname;
+        contentElement.appendChild(nameElement);
+
+        const dateElement = document.createElement("span");
+        dateElement.classList.add("date-comm", "font-sm", "text-capitalize", "text-color");
+        dateElement.innerHTML = `<i class="ti-time mr-2"></i>${comment.registDt}`;
+        contentElement.appendChild(dateElement);
+
+        const commentContent = document.createElement("div");
+        commentContent.classList.add("comment-content", "mt-3");
+        commentContent.textContent = comment.content;
+        contentElement.appendChild(commentContent);
+
+        // 대댓글 UI에 Reply 미포함
+        if(comment.parentId == null || comment.parentId == ""){
+            const metaElement = document.createElement("div");
+            metaElement.classList.add("comment-meta", "mt-4", "mt-lg-0", "mt-md-0");
+            const replyLink = document.createElement("a");
+            replyLink.classList.add("text-underline");
+            replyLink.textContent = "Reply";
+            replyLink.href = "";
+            replyLink.addEventListener("click", function(event) {
+              event.preventDefault(); // href 이벤트 막기
+              document.getElementById("parentId").value = comment.id;
+              document.getElementById("replyId").value = comment.registNickname + " 님에게 답글 남기기.";
+              const replyArea = document.getElementById("replyId");
+              replyArea.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
+              document.getElementById("replyCancel").value = "X";
+              document.getElementById("commentType").value = "2";
+            });
+            metaElement.appendChild(replyLink);
+            contentElement.appendChild(metaElement);
+        }
+
+        commentElement.appendChild(contentElement);
+
+        return commentElement;
+    }
+
+    function fnReplyCancel(){
+        document.getElementById("parentId").value = "";
+        document.getElementById("replyId").value = "";
+        document.getElementById("replyCancel").value = "";
+        document.getElementById("commentType").value = "1";
+    }
+
+    // 챗 GPT API 함수
+    async function fnChatGPT() {
+
+      var maxGptCnt = document.getElementById('maxGptCnt').value;
+      $('input[name=maxGptCnt]').attr('value',parseInt(maxGptCnt)+1);
+
+      if(document.getElementById('maxGptCnt').value > 5){
+        alert("많이 누르면 돈 나가요 ㅎㅎ..");
+        return;
+      }
+
+      var prompt = document.getElementById('memo').value; // 자연어 생성에 사용할 prompt
+      if(prompt == '') {
+        alert("질문을 입력해주세요.");
+        return;
+      }
+
+      prompt += " 200자 이내로 설명해줘";
+
+      const apiKey = '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'; // API 키
+      const url = 'https://api.openai.com/v1/chat/completions';     // gpt-3.5-turbo 모델용 url
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + apiKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "model": "gpt-3.5-turbo",
+            "messages": [{"role": "user", "content": prompt}],
+            max_tokens: 500,
+          })
+        });
+
+        const data = await response.json(); // 응답 데이터를 JSON으로 변환
+        const answer = data.choices[0].message.content; // gpt-3.5-turbo 모델이 생성한 답변
+        const tmp = '\n\n . . . . . . . .  ( 비용 문제로 여기까지만.. ^^ )';
+        $('#chatGPTanswer').val(answer + tmp);
+      } catch (error) {
+        console.error(error);
+        $('#chatGPTanswer').val("Error 발생하였습니다. 잠시 후에 시도해 주세요.");
+      }
+    }
+
+    function scrollToTop() {
+        window.parent.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+     /**
+     * 비동기 호출 함수 (POST-일반)
+     * @param {string} url 비동기 호출할 주소
+     * @param {object} params 매개변수
+     * @param {method} callbackMethod 실행될 함수
+     */
+    function ajaxPost(url, params, callbackMethod) {
+        $.ajax({
+            contentType: 'application/json',
+            type: 'POST',
+            data: JSON.stringify(params),
+            url: url,
+            //dataType: "json",
+            success : function(data) {
+                callbackMethod(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                alert("에러가 발생했습니다. \r\n관리자에게 문의해주십시오.");
+            }
+        });
+    }
+</script>
+
+
+</body>
+</html>

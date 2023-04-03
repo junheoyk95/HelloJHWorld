@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello JH World Post 만들기</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <style>
+    body {
+      min-height: 100vh;
+
+
+    }
+
+    .input-form {
+      max-width: 680px;
+
+      margin-top: 80px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+  </style>
+</head>
+
+<body style="background-color: #eeeeee;">
+<div class="container">
+  <div class="input-form-backgroud row">
+    <div class="input-form col-md-12 mx-auto">
+
+        <h4 class="mb-3">NEW POST
+          <button type="button" onClick="location.href='blog'" class="btn btn-warning" style="height:40px;float: right;color:white">
+          X
+        </button></h4>
+
+
+      <form class="validation-form" name="formNm" method="post" novalidate>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="category">카테고리</label>
+            <select type="text" class="form-control" id="category" name="category" style="float:left" placeholder="" value="" required>
+              <option value="Java">Java</option>
+              <option value="Spring">Spring</option>
+              <option value="Jpa">Jpa</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="DB">DB</option>
+              <option value="React">React</option>
+              <option value="ReactNative">ReactNative</option>
+              <option value="알고리즘">알고리즘</option>
+              <option value="리눅스">리눅스</option>
+              <option value="Tomcat">Tomcat</option>
+              <option value="로드밸런싱">로드밸런싱</option>
+              <option value="Jenkins">Jenkins</option>
+              <option value="기타">기타</option>
+            </select>
+            <div class="invalid-feedback">
+              카테고리를 선택해주세요.
+            </div>
+          </div>
+        </div>
+          <div class="mb-3">
+            <label for="title">제목</label>
+              <input type="text" class="form-control" id="title" name="title" style="float:left" placeholder="" value="" required>
+            <div class="invalid-feedback">
+              제목을 입력해주세요.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="content">내용</label>
+            <textarea type="text" class="form-control" style="height:640px" id="content" name="content" placeholder="" value="" required></textarea>
+            <div class="invalid-feedback">
+              내용을 입력해주세요.
+            </div>
+          </div>
+        <div class="mb-4"></div>
+        <button class="btn btn-primary btn-lg btn-block" type="button" onclick="fnPostCreate()">만들기</button>
+      </form>
+    </div>
+  </div>
+  <footer class="my-3 text-center text-small">
+    <!--<p class="mb-1">&copy; 2023 JH</p>-->
+  </footer>
+</div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+
+    // post 생성 함수
+    function fnPostCreate() {
+      const title = document.getElementById('title').value;
+      const content = document.getElementById('content').value;
+      const category = document.getElementById('category').value;
+      const userId =  window.parent.document.getElementById('userId').value;
+      const nickname =  window.parent.document.getElementById('nickname').value;
+
+      if(title == ''){
+        alert("제목을 입력해주세요.");
+        return;
+      }
+      if(content == ''){
+        alert("내용을 입력해주세요.");
+        return;
+      }
+
+      let params = {
+        title: title,
+        content: content,
+        category: category,
+        registUserId: userId,
+        registNickname: nickname
+      }
+
+      ajaxPost("/blogPost/postCreate", params, function(resData) {
+        alert("Post 생성되었습니다.");
+        window.location.href = `/blog`;
+      });
+
+    }
+
+     /**
+     * 비동기 호출 함수 (POST-일반)
+     * @param {string} url 비동기 호출할 주소
+     * @param {object} params 매개변수
+     * @param {method} callbackMethod 실행될 함수
+     */
+    function ajaxPost(url, params, callbackMethod) {
+        $.ajax({
+            contentType: 'application/json',
+            type: 'POST',
+            data: JSON.stringify(params),
+            url: url,
+            //dataType: "json",
+            success : function(data) {
+                callbackMethod(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                alert("에러가 발생했습니다. \r\n관리자에게 문의해주십시오.");
+            }
+        });
+    }
+  </script>
+</body>
+
+</html>

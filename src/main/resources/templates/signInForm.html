@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello JH World 회원가입</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <style>
+    body {
+      min-height: 100vh;
+
+
+    }
+
+    .input-form {
+      max-width: 680px;
+
+      margin-top: 80px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+  </style>
+</head>
+
+<body style="background-color: #eeeeee;">
+<div class="container">
+  <div class="input-form-backgroud row">
+    <div class="input-form col-md-12 mx-auto">
+
+        <h4 class="mb-3">회원가입
+          <button type="button" onClick="location.href='/'" class="btn btn-warning" style="height:40px;float: right;color:white">
+          X
+        </button></h4>
+
+
+      <form class="validation-form" name="formNm" method="post" novalidate>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name">아이디</label>
+              <input type="text" class="form-control" id="userId" name="userId" style="float:left" placeholder="" value="" required>
+            <div class="invalid-feedback">
+              아이디를 입력해주세요.
+            </div>
+          </div>
+          <button type="button" onClick="fnDepId()" class="btn btn-success" style="margin-top: 25px;height:48px;color:white;">
+            중복확인
+          </button>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name">비밀번호</label>
+            <input type="text" class="form-control" id="password" name="password" placeholder="" value="" required>
+            <div class="invalid-feedback">
+              비밀번호를 입력해주세요.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="name">비밀번호 재확인</label>
+            <input type="text" class="form-control" id="passwordRe" placeholder="" value="" required>
+            <div class="invalid-feedback">
+              비밀번호를 입력해주세요.
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name">이름</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="" value="" required>
+            <div class="invalid-feedback">
+              이름을 입력해주세요.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3" style="margin-top:15px">
+          <label for="memo">자기소개</label>
+          <input type="text" class="form-control" id="memo" name="memo" placeholder="간단한 자기소개" >
+        </div>
+        <label style="margin-bottom:18px">( 자기소개를 입력하면 ChatGPT가 어울리는 닉네임을 추천합니다. )</label>
+
+          <div class="mb-3">
+            <label for="nickname">닉네임</label>
+            <input type="text" class="form-control" id="nicknameGPT" placeholder="" value="" readonly style="margin-bottom:5px">
+          </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="" value="" style="margin-top: 5px;" required>
+            <div class="invalid-feedback">
+              닉네임을 입력해주세요.
+            </div>
+          </div>
+            <button type="button" onclick="fnChatGPT()" class="btn btn-success" style="margin-right:16px;height:48px;color:white;">
+              ChatGPT
+            </button>
+            <input type="hidden" id="maxGptCnt" name="maxGptCnt" value="0">
+            <button type="button" onClick="fnDepNickname()" class="btn btn-success" style="height:48px;color:white;">
+              중복확인
+            </button>
+        </div>
+
+        <hr class="mb-4">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="aggrement" required>
+          <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
+        </div>
+        <div class="mb-4"></div>
+        <button class="btn btn-primary btn-lg btn-block" type="button" onclick="fnMemberCreate()">가입 완료</button>
+      </form>
+    </div>
+  </div>
+  <footer class="my-3 text-center text-small">
+    <!--<p class="mb-1">&copy; 2023 JH</p>-->
+  </footer>
+</div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+
+    // 가입 신청 함수
+    window.addEventListener('load', () => {
+      const forms = document.getElementsByClassName('validation-form');
+
+      Array.prototype.filter.call(forms, (form) => {
+        form.addEventListener('submit', function (event) {
+
+          if (form.checkValidity() === false) {
+            event.preventDefault();  // a 태그나 submit 태그는 누르게 되면 href 를 통해 이동하거나 , 창이 새로고침하여 실행됩니다.
+                                     // preventDefault 를 통해 이러한 동작을 막아줄 수 있습니다.
+            event.stopPropagation(); // stopPropagation는 이벤트가 상위 엘리먼트에 전달되지 않게 막아 준다.
+          }
+
+          if(document.getElementById('password').value != document.getElementById('passwordRe').value){
+            alert("입력한 비밀번호가 일치하지 않습니다.");
+            return;
+          }
+
+          form.classList.add('was-validated');
+
+        }, false);
+      });
+    }, false);
+
+    // 회원 가입 함수
+    function fnMemberCreate() {
+      const userId = document.getElementById('userId').value;
+      const password = document.getElementById('password').value;
+      const passwordRe = document.getElementById('passwordRe').value;
+      const name = document.getElementById('name').value;
+      const memo = document.getElementById('memo').value;
+      const nickname = document.getElementById('nickname').value;
+
+
+      if(userId == "" || password == "" || passwordRe == "" || name == "" || nickname == ""){
+        alert("모두 입력해주세요.");
+        return;
+      }
+
+      if(!$('#aggrement').is(':checked')){
+        alert("개인정보 수집 및 이용 동의에 체크해주세요.");
+        return;
+      }
+
+      let params = {
+        userId: userId,
+        password: password,
+        name: name,
+        memo: memo,
+        nickname: nickname
+      }
+
+      ajaxPost("/members/create", params, function(resData) {
+        if(resData.data.msg == "success"){
+          alert("회원가입이 완료되었습니다!");
+          location.replace('/');
+        }else{
+          alert(resData.data.msg);
+        }
+      });
+
+    }
+
+
+    // 챗 GPT API 함수
+    async function fnChatGPT() {
+
+      var maxGptCnt = document.getElementById('maxGptCnt').value;
+      $('input[name=maxGptCnt]').attr('value',parseInt(maxGptCnt)+1);
+
+      if(document.getElementById('maxGptCnt').value > 10){
+        alert("많이 누르면 돈 나가요 ㅎㅎ..");
+        return;
+      }
+
+      var prompt = document.getElementById('memo').value; // 자연어 생성에 사용할 prompt
+      if(prompt == '') {
+        prompt += '두글자의 귀여운 닉네임을 딱 한개 추천해줘.';
+      }else{
+        prompt += '. Please recommend just one cute nickname that goes well with the introduction.';
+      }
+
+      const apiKey = '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'; // API 키
+      //const url = 'https://api.openai.com/v1/completions';        // text-davinci-003 모델용 url
+      const url = 'https://api.openai.com/v1/chat/completions';     // gpt-3.5-turbo 모델용 url
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + apiKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            //model: "text-davinci-003",
+            "model": "gpt-3.5-turbo",
+            //prompt: prompt,
+            "messages": [{"role": "user", "content": prompt}],
+            max_tokens: 29,
+            //Temperature: 0.9
+          })
+        });
+
+        const data = await response.json(); // 응답 데이터를 JSON으로 변환
+        // const answer = data.choices[0].text;         // text-davinci-003 모델용
+        const answer = data.choices[0].message.content; // gpt-3.5-turbo 모델이 생성한 답변
+
+        $('#nicknameGPT').val(answer);
+      } catch (error) {
+        console.error(error);
+        $('#nicknameGPT').val("Error 발생하였습니다. 잠시 후에 시도해 주세요.");
+      }
+    }
+
+    // 닉네임 입력을 받아
+    $( "#nickname" ).keyup(function (event) {
+         checkIsKorean( "nickname" );
+    });
+    // 한글만 입력 가능하도록 처리 하는 부분
+    var checkIsKorean = function( val_id ) {
+         var regexp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+
+         var v = $( "#"+val_id ).val();
+
+         if ( regexp.test(v) ) {
+              alert("특수문자는 입력할 수 없습니다.");
+              $( "#"+val_id ).val(v.replace(regexp, ''));
+         }
+    }
+
+    // id 중복확인
+    function fnDepId() {
+      const userId = document.getElementById('userId').value;
+
+      if(userId == ''){
+        alert("아이디를 입력해주세요.");
+        return;
+      }
+
+      let params = {
+        userId: userId
+      }
+
+      ajaxPost("/members/duplicateCheckId", params, function(resData) {
+        alert(resData.data.msg);
+      });
+
+    }
+
+    // 닉네임 중복확인
+    function fnDepNickname() {
+      const nickname = document.getElementById('nickname').value;
+
+      if(nickname == ''){
+        alert("닉네임을 입력해주세요.");
+        return;
+      }
+
+      let params = {
+        nickname: nickname
+      }
+
+      ajaxPost("/members/duplicateCheckNickname", params, function(resData) {
+        alert(resData.data.msg);
+      });
+
+    }
+
+     /**
+     * 비동기 호출 함수 (POST-일반)
+     * @param {string} url 비동기 호출할 주소
+     * @param {object} params 매개변수
+     * @param {method} callbackMethod 실행될 함수
+     */
+    function ajaxPost(url, params, callbackMethod) {
+        $.ajax({
+            contentType: 'application/json',
+            type: 'POST',
+            data: JSON.stringify(params),
+            url: url,
+            //dataType: "json",
+            success : function(data) {
+                callbackMethod(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                alert("에러가 발생했습니다. \r\n관리자에게 문의해주십시오.");
+            }
+        });
+    }
+  </script>
+</body>
+
+</html>

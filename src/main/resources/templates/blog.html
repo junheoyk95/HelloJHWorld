@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<!--<html lang="en">-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Hello JunHeoyk World!</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    
+    <!-- THEME CSS
+	================================================== -->
+	<bean id="temporals" class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect"/>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Themify -->
+    <link rel="stylesheet" href="plugins/themify/css/themify-icons.css">
+    <link rel="stylesheet" href="plugins/slick-carousel/slick-theme.css">
+    <link rel="stylesheet" href="plugins/slick-carousel/slick.css">
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" href="plugins/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="plugins/owl-carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css">
+    <!-- manin stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+
+<div class="breadcrumb-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="text-center">
+                   <h2 class="lg-title">Blog</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<section class="section-padding">
+
+
+	<div class="container">
+
+	<div class="container">
+
+			<div class="sidebar-widget about mb-5 text-center p-3" style="margin: 0 auto;">
+				<div class="about-author">
+					<a href="#" th:onclick="fnPostAdd()"><img src="images/plus.png" alt="" class="img-fluid" style="width:150px;height:150px"></a>
+				</div>
+				<h4 class="mb-0 mt-4">Post Add</h4>
+			</div>
+
+
+		<div class="row">
+		<div class="col-lg-2 col-md-6 col-sm-12 col-xs-12" style="margin-right:40px;margin-top:10px">
+			<div class="sidebar sidebar-left">
+				<div class="sidebar-widget category mb-5">
+					<h4 class="text-center widget-title">Catgeories</h4>
+					<ul th:each="category : ${categories}" class="list-unstyled">
+						<li class="align-items-center d-flex justify-content-between">
+							<a href="#" th:onclick="fnCategory(/*[[${category.category}]]*/)" th:text="${category.category}"></a>
+							<span th:text="${category.postCnt}"></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div th:replace="~{fragments/bodyHeader :: bodyHeader}" />
+		<table id="postsTable" class="table table-striped" style="width:880px">
+			<thead>
+			<tr>
+				<th>#</th>
+				<th>Category</th> <th>제목</th> <th>작성자</th> <th>일자</th><th></th><th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="blogPosts : ${blogPosts}" style="align:center">
+				<td th:text="${blogPosts.id}" style="vertical-align:middle"></td>
+				<td th:text="${blogPosts.category}" style="vertical-align:middle"></td>
+				<td th:text="${blogPosts.title}" style="vertical-align:middle"></td>
+				<td th:text="${blogPosts.registNickname}" style="vertical-align:middle"></td>
+				<td th:text="${#strings.substring(blogPosts.registDt, 0, 10)}" style="vertical-align:middle"></td>
+				<td>
+					<button class="btn btn-primary btn-lg btn-block" type="button" th:onclick="fnPostPage(/*[[${blogPosts.id}]]*/)">></button>
+				</td>
+				<td>
+					<button class="btn btn-warning btn-lg btn-block" type="button" th:onclick="fnDeletePost(/*[[${blogPosts.id}]]*/)">X</button>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		</div>
+		</div>
+
+		</div>
+
+		<div id="pagingDiv" class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+
+			<div class="pagination mt-5 pt-4" style="margin-left:210px">
+				<ul class="list-inline" th:if="${blogPosts.totalPages > 1}">
+					<li class="list-inline-item" th:each="i : ${#numbers.sequence(0, blogPosts.totalPages - 1)}">
+						<a th:href="@{/blog(page=${i})}"  th:text="${i} + 1"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<input type="hidden" id="userId"  th:value="${userId}">
+
+<!-- THEME JAVASCRIPT FILES
+================================================== -->
+<!-- initialize jQuery Library -->
+<script src="plugins/jquery/jquery.js"></script>
+<!-- Bootstrap jQuery -->
+<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/bootstrap/js/popper.min.js"></script>
+<!-- Owl caeousel -->
+<script src="plugins/owl-carousel/owl.carousel.min.js"></script>
+<script src="plugins/slick-carousel/slick.min.js"></script>
+<script src="plugins/magnific-popup/magnific-popup.js"></script>
+<!-- Instagram Feed Js -->
+<script src="plugins/instafeed-js/instafeed.min.js"></script>
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+<script src="plugins/google-map/gmap.js"></script>
+<!-- main js -->
+<script src="js/custom.js"></script>
+
+<script>
+
+	window.onload = function() {
+		  	// 페이지 로드 후 실행할 코드
+
+		};
+
+	// post 페이지 이동
+    function fnPostPage(postId) {
+
+
+		// window.location.href를 사용하여 URL을 전달할 때, 문자열 안에서 ${postId}와 같은 템플릿 리터럴을 사용하려면 백틱(`)을 사용해야 합니다.
+      	window.location.href = `/postPage?postId=${postId}`;
+
+    }
+
+    function fnPostAdd() {
+    	var userId = document.getElementById("userId").value;
+        if(userId == ""){
+            alert("로그인이 필요합니다.");
+            return;
+        }
+        window.location.href = `/postCreateForm`;
+    }
+
+    // post 삭제
+    function fnDeletePost(postId) {
+		var userId = document.getElementById("userId").value;
+        if(userId != "junheoyk"){
+            alert("관리자 권한이 필요합니다.");
+            return;
+        }
+
+	    let params = {
+            id: postId
+          }
+
+        ajaxPost("/postPage/deletePost", params, function(resData) {
+        	location.reload();
+         });
+    }
+
+    function fnCategory(category) {
+		var divElement = document.getElementById("pagingDiv");
+	  	divElement.style.display = "none";
+
+    	let params = {
+            category: category
+          }
+
+        ajaxPost("/postsListByCategory", params, function(resData) {
+        	$('#postsTable').replaceWith(resData);
+         });
+    }
+
+    /**
+     * 비동기 호출 함수 (POST-일반)
+     * @param {string} url 비동기 호출할 주소
+     * @param {object} params 매개변수
+     * @param {method} callbackMethod 실행될 함수
+     */
+    function ajaxPost(url, params, callbackMethod) {
+        $.ajax({
+            contentType: 'application/json',
+            type: 'POST',
+            data: JSON.stringify(params),
+            url: url,
+            //dataType: "json",
+            success : function(data) {
+                callbackMethod(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                alert("에러가 발생했습니다. \r\n관리자에게 문의해주십시오.");
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>
