@@ -38,8 +38,6 @@ AWS 환경에 배포하여 도메인까지 연결하는 경험을 쌓기 위함.
 
 ![image](https://user-images.githubusercontent.com/100138691/229546426-a0112fdd-d9c9-4ca5-bd7e-4291b2f990cf.png)
 
-![2](https://user-images.githubusercontent.com/100138691/229539477-aa2ba449-6ead-46e5-bd0b-12b9c705a8ed.PNG)
-
 - 로그인 성공 시 세션에 로그인 정보 세팅
 
 ![image](https://user-images.githubusercontent.com/100138691/229540816-e38223df-2f88-43c4-9f12-016771d67825.png)
@@ -56,25 +54,25 @@ AWS 환경에 배포하여 도메인까지 연결하는 경험을 쌓기 위함.
 
 ![0](https://user-images.githubusercontent.com/100138691/229550260-f907a868-12a1-46f2-b2ea-ad7778de2c23.PNG)
 
-- 날씨 API 와 ChatGPT API를 활용한 외출 복 추천
+- API 활용한 외출 복 추천
+- 날씨 API를 통해 현재 서울의 날씨 데이터를 가져오고, 그 정보를 토대로 ChatGPT API를 활용해서 외출 복장을 추천 받는 기능
 
 ![00](https://user-images.githubusercontent.com/100138691/229550292-b3ef9ea3-d76f-41d9-8d8e-29fa681885b1.PNG)
 
-- Like 수 상위 3 게시물 조회
+- 게시물 Like 기능을 만들어 Like 수 상위 3개의 게시물을 조회
 
 ![000](https://user-images.githubusercontent.com/100138691/229550498-06c129ad-01ea-42d0-8fca-15e31d982d33.PNG)
 
 
 ### 4. Blog 게시판
 
-- 게시물 등록
-- 카테고리별 조회
+- GROUP BY를 사용해 카테고리별 게시물 갯수 조회
 
 ![image](https://user-images.githubusercontent.com/100138691/229565260-51be59f5-8e1e-4f3a-97fe-4354ad466900.png)
 
 ![3](https://user-images.githubusercontent.com/100138691/229550772-90c41357-aaa1-4edd-815b-7afdc0b09b99.PNG)
 
-- 페이징 처리
+- Page 객체를 사용해 게시물 목록 페이징 처리
 
 ![image](https://user-images.githubusercontent.com/100138691/229565732-8f9321ac-1b68-442e-9c8c-5767989dc5b7.png)
 
@@ -96,10 +94,15 @@ AWS 환경에 배포하여 도메인까지 연결하는 경험을 쌓기 위함.
 ![41](https://user-images.githubusercontent.com/100138691/229567006-1a2cba57-8483-4099-a4e5-b45454f8b63d.PNG)
 
 
-## Trouble Shooting
+## Trouble Shooting 
 
 
 ### 느낀 점
+
+Spring Boot, Jpa, AWS EC2, AWS RDS 모두 처음 사용하다 보니 하나부터 열까지 검색하고 공부해야 했다.
+처음이기 때문에 걱정은 됐었지만, 구현해 보고 나니 결국 이것도 하나의 도구일 뿐
+개발을 할 줄 아는 개발자는 원하는 도구를 들고 작업하면 되는 일이다. 라는 것을 새삼 느꼈다.
+물론 잘 하는 사람이 되기 위해선 앞으로도 꾸준히 공부해야겠다.
 
 
 
