@@ -94,8 +94,6 @@ AWS 환경에 배포하여 도메인까지 연결하는 경험을 쌓기 위함.
 ![41](https://user-images.githubusercontent.com/100138691/229567006-1a2cba57-8483-4099-a4e5-b45454f8b63d.PNG)
 
 
-## Trouble Shooting 
-
 
 ### 느낀 점
 
