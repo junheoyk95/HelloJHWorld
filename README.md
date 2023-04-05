@@ -1,5 +1,5 @@
 # JPA + ChatGPT API 활용한 웹사이트
-#### url : http://hellojhworld.shop
+### url : http://hellojhworld.shop
 
 
 ### 프로젝트 목적
